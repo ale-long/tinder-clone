@@ -2,13 +2,15 @@ import express from 'express';
 import mongoose from 'mongoose';
 import {connection_url} from './config.js'
 import Cards from './Schema/dbCards.js';
+import Cors from 'cors';
 
 // App Config 
 const app = express();
-const port = process.env.PORT || 8001
+const port = process.env.PORT || 8001;
 
 // Middlewares
-app.use(express.json())
+app.use(express.json());
+app.use(Cors());
 
 // DB config 
 mongoose.connect(connection_url, {
@@ -22,7 +24,7 @@ app.get('/', (req, res) => {
     res.status(200).send('Hello!');
 })
 
-app.post('/tinder/card', (req, res)=>{
+app.post('/tinder/cards', (req, res)=>{
     const dbCard = req.body;
     Cards.create(dbCard, (err, data) => {
         if (err) {
